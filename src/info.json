@@ -1,0 +1,102 @@
+{
+  "identifier": "com.hans.bob-plugin-yi-translate",
+  "version": "1.0.2",
+  "category": "translate",
+  "name": "Yi Translate",
+  "summary": "一般根据apiKey发布页和api文档配置",
+  "icon": "icon.png",
+  "author": "hans <admin@hansking.cn>",
+  "homepage": "https://github.com/hansking98/bob-plugin-yi-translate",
+  "appcast": "https://raw.githubusercontent.com/hansking98/bob-plugin-yi-translate/main/appcast.json",
+  "minBobVersion": "0.5.0",
+  "options": [
+    {
+      "identifier": "mode",
+      "type": "menu",
+      "title": "模式",
+      "defaultValue": "translate",
+      "menuValues": [
+        {
+          "title": "翻译模式",
+          "value": "translate"
+        },
+        {
+          "title": "文字润色",
+          "value": "polishing"
+        },
+        {
+          "title": "对话模式",
+          "value": "chat"
+        },
+        {
+          "title": "自定义prompt",
+          "value": "custom_prompt"
+        }
+      ],
+      "desc": "模式切换,支持翻译模式,文字润色,对话模式"
+    },
+    {
+      "identifier": "prompt",
+      "type": "text",
+      "defaultValue": "",
+      "title": "自定义prompt",
+      "desc": "模式选择自定义prompt时填写,GPT会按照你指定的prompt进行回复"
+    },
+    {
+      "identifier": "service",
+      "type": "menu",
+      "title": "大模型供应商",
+      "defaultValue": "default",
+      "menuValues": [
+        {
+          "title": "Yi Model API",
+          "value": "default"
+        },
+        {
+          "title": "自定义API地址",
+          "value": "api_key_1"
+        }
+        
+      ],
+      "desc": "供应商切换"
+    },
+    {
+      "identifier": "url",
+      "type": "text",
+      "defaultValue": "",
+      "title": "url",
+      "desc": "供应商位 Yi Model API 时，无需填写url"
+    },
+    {
+      "identifier": "api_key",
+      "type": "text",
+      "defaultValue": "",
+      "title": "api_key",
+      "desc": "从大模型平台获取的apikey"
+    },
+    {
+      "identifier": "model",
+      "type": "menu",
+      "title": "模型",
+      "defaultValue": "yi-34b-chat-0205",
+      "menuValues": [
+        {
+          "title": "yi-34b-chat-0205",
+          "value": "yi-34b-chat-0205"
+        },
+        {
+          "title": "yi-34b-chat-200k",
+          "value": "yi-34b-chat-200k"
+        }
+      ],
+      "desc": "模型切换"
+    },
+    {
+      "identifier": "custom_model_name",
+      "type": "text",
+      "defaultValue": "",
+      "title": "自定义模型名",
+      "desc": "大模型平台提供的模型"
+    }
+  ]
+}
