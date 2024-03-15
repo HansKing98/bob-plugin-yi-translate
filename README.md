@@ -1,5 +1,7 @@
 # bob-plugin-yi-translate
 
+一个让 Bob 翻译可以使用 零一万物Yi Model API 的插件	
+
 Yi Model Api 申请 http://platform.lingyiwanwu.com
 
 ## 支持 普通聊天,翻译,文字润色三个功能切换
