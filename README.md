@@ -1,14 +1,20 @@
-# bob-plugin-yi-translate
+# 一个让 Bob 翻译可以使用 零一万物Yi Model API 的插件 
 
-一个让 Bob 翻译可以使用 零一万物Yi Model API 的插件 
+安装步骤：
 
-1. bob 社区版下载地址 https://github.com/ripperhe/Bob/releases/download/v0.10.3/Bob.zip
+>1. bob 社区版下载地址 https://github.com/ripperhe/Bob/releases/download/v0.10.3/Bob.zip
+>
+>2. Yi Model Translate 插件下载地址 https://github.com/HansKing98/bob-plugin-yi-translate/releases/download/v1.0.3/bob-plugin-yi-translate-v1.0.3.bobplugin
+>   - bobplugin文件在安装 bob app 后可以双击打开
+>
+>
+>3. Yi Model Api 申请 http://platform.lingyiwanwu.com
+>
+> ![截屏2024-03-15 15.54.42](http://image.hansking.cn/picgo/%E6%88%AA%E5%B1%8F2024-03-15%2015.54.42.png)
+>
+>**bob和插件都安装后** 进入上图位置，填写 api_key ，选中文字 按 commant+d 体验翻译。
 
-2. Yi Model Translate 插件下载地址 https://github.com/HansKing98/bob-plugin-yi-translate/releases/download/v1.0.3/bob-plugin-yi-translate-v1.0.3.bobplugin
-   - bobplugin文件在安装 bob app 后可以双击打开
 
-
-3. Yi Model Api 申请 http://platform.lingyiwanwu.com
 
 ## 支持 普通聊天,翻译,文字润色三个功能切换
 
