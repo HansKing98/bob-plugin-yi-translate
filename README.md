@@ -4,7 +4,7 @@
 
 >1. bob 社区版下载地址 https://github.com/ripperhe/Bob/releases/download/v0.10.3/Bob.zip
 >
->2. Yi Model Translate 插件下载地址 https://github.com/HansKing98/bob-plugin-yi-translate/releases/download/v1.0.3/bob-plugin-yi-translate-v1.0.3.bobplugin
+>2. Yi Model Translate 插件下载地址 https://github.com/HansKing98/bob-plugin-yi-translate/releases/download/v1.0.4/bob-plugin-yi-translate_v1.0.4.bobplugin
 >   - bobplugin文件在安装 bob app 后可以双击打开
 >
 >
