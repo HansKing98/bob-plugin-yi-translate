@@ -1,6 +1,6 @@
 {
   "identifier": "com.hans.bob-plugin-yi-translate",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "category": "translate",
   "name": "Yi Translate",
   "summary": "一般根据apiKey发布页和api文档配置",
@@ -78,15 +78,15 @@
       "identifier": "model",
       "type": "menu",
       "title": "模型",
-      "defaultValue": "yi-34b-chat-0205",
+      "defaultValue": "yi-lightning",
       "menuValues": [
         {
           "title": "yi-34b-chat-0205",
           "value": "yi-34b-chat-0205"
         },
         {
-          "title": "yi-34b-chat-200k",
-          "value": "yi-34b-chat-200k"
+          "title": "yi-lightning",
+          "value": "yi-lightning"
         }
       ],
       "desc": "模型切换"
