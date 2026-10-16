@@ -1,103 +1,51 @@
-var config = require('./config.js');
-var utils = require('./utils.js');
-var yichat = require('./yichat.js');
-var file = require("./file.js");
-const { readFile } = require("./file.js");
-
-// var { historyFileName, readFile, writeFile } = require("./file");
-// 入参格式:
-// {
-//     "model": "yi-34b-chat-0205",
-//     "messages": [{"role": "user", "content": "帮我把Banana翻译为中文"}]
-// }
-// 出参格式:
-// {"id":"0f1a1078b531435a9ffc29eb69d403e9","object":"chat.completion","created":1678332271,"model":"yi-34b-chat-0205","usage":{"prompt_tokens":24,"completion_tokens":27,"total_tokens":67},"choices":[{"message":{"role":"assistant","content":"香蕉"},"finish_reason":"stop","index":0}]}
-
+const config = require('./config.js');
+const utils = require('./utils.js');
+const yichat = require('./yichat.js');
+const api = require('./api.js');
 
 function supportLanguages() {
-    return config.supportedLanguages.map(([standardLang]) => standardLang);
+    return config.supportedLanguages.map(function (entry) { return entry[0]; });
 }
 
-function translate(query, completion) {
-    (async () => {
-        const targetLanguage = utils.langMap.get(query.detectTo);
-        const sourceLanguage = utils.langMap.get(query.detectFrom);
-        if (!targetLanguage) {
-            const err = new Error();
-            Object.assign(err, {
-                _type: 'unsupportLanguage',
-                _message: '不支持该语种',
-            });
-            throw err;
-        }
-        const source_lang = sourceLanguage || 'ZH';
-        const target_lang = targetLanguage || 'EN';
-        const translate_text = query.text || '';
-        if (translate_text !== '') {
-            // 触发指令的结果
-            const directiveResult = utils.getDirectiveResult(translate_text);
-            if (directiveResult) {
-                completion({
-                    result: {
-                        from: query.detectFrom,
-                        to: query.detectTo,
-                        toParagraphs: directiveResult.split('\n'),
-                    },
-                });
-
-                return;
-            }
-
-
-            // 获取对话结果
-            let chatResult = ''
-
-            try {
-                const server = $option.service;
-                $log.info('hans')
-                $log.info(server)
-                $log.info('hans')
-                if (server === 'api_key_1') {
-                    chatResult = await yichat.translate(query, source_lang, target_lang, translate_text, completion)
-                } else {
-                    // 默认请求 api.lingyiwanwu.com
-                    chatResult = await yichat.translate(query, source_lang, target_lang, translate_text, completion)
-                    return;
-                }
-                let mode = $option.mode;
-                const configValue = readFile();
-                if (configValue.mode) {
-                    mode = configValue.mode;
-                }
-                // 对话模式就保存
-                if (mode === 'conversation') {
-                    message.push({
-                        content: chatResult,
-                        role: "assistant",
-                    });
-                    file.writeFile({
-                        value: message,
-                        fileName: file.historyFileName,
-                    });
-                }
-            } catch (e) {
-                Object.assign(e, {
-                    _type: 'network',
-                    _message: '接口请求错误 - ' + JSON.stringify(e),
-                });
-                throw e;
+async function translate(query, completion) {
+    const done = query.onCompletion || completion;
+    let output;
+    try {
+        const text = query.text || '';
+        let result;
+        if (/^#(models|模型|模型列表)$/i.test(text.trim()) || $option.mode === 'models') {
+            const models = await api.listModels();
+            result = models.length
+                ? '可用模型（' + models.length + '）：\n' + models.join('\n') + '\n\n将模型 ID 填入设置中的「自定义模型名」。列表可能包含非聊天模型，请按供应商说明选择。'
+                : '接口返回的模型列表为空。可按供应商文档手动填写模型 ID。';
+        } else {
+            result = utils.getDirectiveResult(text.trim());
+            if (!result) {
+                if (!text.trim()) throw api.error('param', '请输入需要处理的文本。');
+                const target = utils.langMap.get(query.detectTo);
+                if (!target) throw api.error('unsupportedLanguage', '不支持该目标语种。');
+                result = await yichat.translate(target, text);
             }
         }
-    })().catch((err) => {
-        completion({
-            error: {
-                type: err._type || 'unknown',
-                message: err._message || '未知错误',
-                addtion: err._addtion,
-            },
-        });
-    });
+        output = { result: { from: query.detectFrom, to: query.detectTo, toParagraphs: result.split('\n') } };
+    } catch (err) {
+        output = { error: api.publicError(err) };
+    }
+    done(output);
+}
+
+// Bob 1.6+ discovers this optional hook; older Bob versions only call translate.
+async function pluginValidate(completion) {
+    let output;
+    try {
+        await api.listModels();
+        output = { result: true };
+    } catch (err) {
+        output = { result: false, error: api.publicError(err) };
+    }
+    completion(output);
 }
 
 exports.supportLanguages = supportLanguages;
 exports.translate = translate;
+exports.pluginValidate = pluginValidate;

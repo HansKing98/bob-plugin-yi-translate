@@ -2,6 +2,14 @@
   "identifier": "com.hans.bob-plugin-yi-translate",
   "versions": [
     {
+      "version": "1.1.0",
+      "desc": "支持自定义 Base URL、API Key 和实时模型查询；修复自定义模型及对话历史",
+      "sha256": "a0a540bd3516736a4a6ac2d79f8342a1efc72b3dfe47f880928599f393badc6e",
+      "url": "https://github.com/hansking98/bob-plugin-yi-translate/releases/download/v1.1.0/bob-plugin-yi-translate_v1.1.0.bobplugin",
+      "minBobVersion": "0.5.0",
+      "timestamp": 1792151371083
+    },
+    {
       "version": "1.0.5",
       "desc": "yi-lightning",
       "sha256": "71eda6872c2fe0820161e425cd7f6f1dc564b1f0facb96654998edf1eb1e7a05",

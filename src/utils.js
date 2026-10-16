@@ -1,68 +1,39 @@
-var config = require('./config.js');
-var { configFileName, readFile, writeFile, deleteFile, deleteAllFile } = require("./file.js");
-
+const config = require('./config.js');
+const file = require('./file.js');
 const langMap = new Map(config.supportedLanguages);
-const langMapReverse = new Map(config.supportedLanguages.map(([standardLang, lang]) => [lang, standardLang]));
 
-function getDirectiveResult(text) {
-    const configValue = readFile();
-
-    let message;
-
-    switch (text) {
-        case "#mode":
-        case "#Mode":
-        case "#模式":
-            if (configValue.mode === "conversation") {
-                return "当前处于对话模式，有什么可以帮助你的呢？";
-            } else if (configValue.mode === "polishing") {
-                return "当前处于文字润色模式，有什么可以帮助你的呢？";
-            } else if (configValue.mode === "custom_prompt") {
-                return "当前处于自定义prompt模式，有什么可以帮助你的呢？";
-            } else {
-                return "当前处于翻译模式，我支持很多种语言翻译哦~";
-            }
-
-        case "#switch":
-        case "#Switch":
-        case "#切换":
-            if (configValue.mode === "conversation") {
-                configValue.mode = "translate";
-                message = "已切换到翻译模式！";
-            } else if (configValue.mode === "translate") {
-                configValue.mode = "polishing";
-                message = "已切换到润色文字模式！";
-            } else if (configValue.mode === "polishing") {
-                configValue.mode = "custom_prompt";
-                message = "已切换到自定义prompt模式！";
-            } else {
-                configValue.mode = "conversation";
-                message = "已切换到对话模式！";
-            }
-            break;
-
-        case "#clear":
-        case "#Clear":
-        case "#清空":
-            deleteFile();
-
-            return "已清除对话记录，你可以继续聊天。";
-        case "#重置":
-        case "#reset":
-        case "#Reset":
-            deleteAllFile();
-            return "已重置所有设置，你可以继续聊天。";
-    }
-
-    writeFile({
-        value: configValue,
-        fileName: configFileName,
-    });
-
-    return message;
+function currentMode() {
+    const mode = file.readFile().mode || $option.mode || 'translate';
+    return mode === 'conversation' ? 'chat' : mode;
 }
 
+function getDirectiveResult(text) {
+    const mode = currentMode();
+    switch (text.toLowerCase()) {
+        case '#mode':
+        case '#模式':
+            return '当前模式：' + ({ chat: '对话', polishing: '文字润色', custom_prompt: '自定义 Prompt', translate: '翻译' }[mode] || mode);
+        case '#switch':
+        case '#切换': {
+            const modes = ['translate', 'polishing', 'custom_prompt', 'chat'];
+            const settings = file.readFile();
+            settings.mode = modes[(modes.indexOf(mode) + 1) % modes.length];
+            file.writeFile({ value: settings });
+            return getDirectiveResult('#mode');
+        }
+        case '#clear':
+        case '#清空':
+            file.deleteFile();
+            return '已清除对话记录。';
+        case '#reset':
+        case '#重置':
+            file.deleteAllFile();
+            return '已清除对话记录及指令模式，恢复使用设置面板中的模式。';
+        default:
+            return undefined;
+    }
+}
 
 exports.langMap = langMap;
-exports.langMapReverse = langMapReverse;
+exports.currentMode = currentMode;
 exports.getDirectiveResult = getDirectiveResult;

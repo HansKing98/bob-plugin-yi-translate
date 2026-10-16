@@ -1,9 +1,9 @@
 {
   "identifier": "com.hans.bob-plugin-yi-translate",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "category": "translate",
   "name": "Yi Translate",
-  "summary": "一般根据apiKey发布页和api文档配置",
+  "summary": "支持 OpenAI 兼容 API、自定义 Base URL / API Key 和实时模型查询",
   "icon": "icon.png",
   "author": "hans <admin@hansking.cn>",
   "homepage": "https://github.com/hansking98/bob-plugin-yi-translate",
@@ -31,9 +31,13 @@
         {
           "title": "自定义prompt",
           "value": "custom_prompt"
+        },
+        {
+          "title": "查询模型列表",
+          "value": "models"
         }
       ],
-      "desc": "模式切换,支持翻译模式,文字润色,对话模式"
+      "desc": "也可在翻译框输入 #models 或 #模型，实时查询模型列表"
     },
     {
       "identifier": "prompt",
@@ -45,7 +49,7 @@
     {
       "identifier": "service",
       "type": "menu",
-      "title": "大模型供应商",
+      "title": "默认供应商",
       "defaultValue": "default",
       "menuValues": [
         {
@@ -58,21 +62,21 @@
         }
         
       ],
-      "desc": "供应商切换"
+      "desc": "填写 Base URL 后始终优先使用该地址；Yi 选项留空时使用默认地址"
     },
     {
       "identifier": "url",
       "type": "text",
       "defaultValue": "",
-      "title": "url",
-      "desc": "供应商位 Yi Model API 时，无需填写url"
+      "title": "Base URL",
+      "desc": "OpenAI 兼容地址，如 https://api.openai.com/v1 或 http://localhost:11434/v1；兼容完整 /chat/completions 地址"
     },
     {
       "identifier": "api_key",
       "type": "text",
       "defaultValue": "",
-      "title": "api_key",
-      "desc": "从大模型平台获取的apikey"
+      "title": "API Key",
+      "desc": "当前服务的密钥，以 Bearer 认证发送；本地无鉴权服务可留空。Bob 1.6+ 的验证按钮会实时请求 /models"
     },
     {
       "identifier": "model",
@@ -96,7 +100,7 @@
       "type": "text",
       "defaultValue": "",
       "title": "自定义模型名",
-      "desc": "大模型平台提供的模型"
+      "desc": "优先于预设模型；填写 #models 查询得到的模型 ID，留空使用预设模型"
     }
   ]
 }
