@@ -44,6 +44,13 @@ function plugin(options = {}, respond) {
     return { main, api: load('./api.js'), translate, calls, files, settings };
 }
 
+test('Bob entry points are ordinary functions rather than AsyncFunction objects', () => {
+    const { main } = plugin();
+    for (const name of ['supportLanguages', 'translate', 'pluginValidate']) {
+        assert.equal(Object.prototype.toString.call(main[name]), '[object Function]', name);
+    }
+});
+
 test('base URLs, proxy prefixes, local servers and legacy endpoints', () => {
     const { api } = plugin();
     const cases = [

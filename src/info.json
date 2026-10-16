@@ -1,6 +1,6 @@
 {
   "identifier": "com.hans.bob-plugin-yi-translate",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "category": "translate",
   "name": "Yi Translate",
   "summary": "支持 OpenAI 兼容 API、自定义 Base URL / API Key 和实时模型查询",
@@ -42,6 +42,9 @@
     {
       "identifier": "prompt",
       "type": "text",
+      "textConfig": {
+        "type": "visible"
+      },
       "defaultValue": "",
       "title": "自定义prompt",
       "desc": "模式选择自定义prompt时填写,GPT会按照你指定的prompt进行回复"
@@ -67,6 +70,9 @@
     {
       "identifier": "url",
       "type": "text",
+      "textConfig": {
+        "type": "visible"
+      },
       "defaultValue": "",
       "title": "Base URL",
       "desc": "OpenAI 兼容地址，如 https://api.openai.com/v1 或 http://localhost:11434/v1；兼容完整 /chat/completions 地址"
@@ -74,6 +80,9 @@
     {
       "identifier": "api_key",
       "type": "text",
+      "textConfig": {
+        "type": "secure"
+      },
       "defaultValue": "",
       "title": "API Key",
       "desc": "当前服务的密钥，以 Bearer 认证发送；本地无鉴权服务可留空。Bob 1.6+ 的验证按钮会实时请求 /models"
@@ -98,6 +107,9 @@
     {
       "identifier": "custom_model_name",
       "type": "text",
+      "textConfig": {
+        "type": "visible"
+      },
       "defaultValue": "",
       "title": "自定义模型名",
       "desc": "优先于预设模型；填写 #models 查询得到的模型 ID，留空使用预设模型"

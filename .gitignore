@@ -1,3 +1,4 @@
 .DS_Store
 __pycache__/
 release/*_v*.bobplugin
+src_副本*.bobplugin/

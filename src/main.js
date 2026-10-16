@@ -7,7 +7,12 @@ function supportLanguages() {
     return config.supportedLanguages.map(function (entry) { return entry[0]; });
 }
 
-async function translate(query, completion) {
+// Legacy Bob checks for ordinary functions when discovering plugin entry points.
+function translate(query, completion) {
+    return translateAsync(query, completion);
+}
+
+async function translateAsync(query, completion) {
     const done = query.onCompletion || completion;
     let output;
     try {
@@ -35,7 +40,11 @@ async function translate(query, completion) {
 }
 
 // Bob 1.6+ discovers this optional hook; older Bob versions only call translate.
-async function pluginValidate(completion) {
+function pluginValidate(completion) {
+    return validateAsync(completion);
+}
+
+async function validateAsync(completion) {
     let output;
     try {
         await api.listModels();

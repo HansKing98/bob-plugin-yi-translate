@@ -5,7 +5,7 @@
 ## 安装与升级
 
 1. 安装 [Bob](https://bobtranslate.com/)，兼容 Bob 0.5.0+，包括 0.10.3 社区版。
-2. 下载 [v1.1.0 安装包](https://github.com/HansKing98/bob-plugin-yi-translate/releases/download/v1.1.0/bob-plugin-yi-translate_v1.1.0.bobplugin)，双击安装。
+2. 下载 [v1.1.2 安装包](https://github.com/HansKing98/bob-plugin-yi-translate/releases/download/v1.1.2/bob-plugin-yi-translate_v1.1.2.bobplugin)，双击安装。其他版本见 [Releases](https://github.com/HansKing98/bob-plugin-yi-translate/releases)。
 3. 已安装的用户可通过 Bob 的插件更新功能升级。插件标识及已有 URL、API Key、模型选项标识保持不变。
 
 ## 配置
@@ -18,6 +18,8 @@
 | API Key | 对应服务的密钥，自动以 `Authorization: Bearer ...` 发送；无鉴权的本地服务可留空 |
 | 自定义模型名 | 填写模型 ID，优先于预设模型；留空则使用预设模型 |
 | 模式 | 翻译、文字润色、对话、自定义 Prompt 或查询模型列表 |
+
+Bob 1.8.0+ 中，仅 API Key 使用密文输入框；Base URL、自定义模型名和自定义 Prompt 均为明文输入框。Bob 0.10.3 社区版不支持 `textConfig`，会统一显示带“小眼睛”的输入框，插件无法移除；可点击眼睛切换明文查看。此项界面配置为新版 Bob 的可选增强，旧版仍可翻译和查询模型。
 
 地址示例：
 
